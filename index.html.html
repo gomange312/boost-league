@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>네이버 7월 매출 BOOST LEAGUE</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    font-family:'Pretendard','Noto Sans KR','Malgun Gothic',sans-serif;
+    background:
+      radial-gradient(circle at 8% 12%, rgba(255,215,80,.18) 0 8px, transparent 9px),
+      radial-gradient(circle at 92% 8%, rgba(160,120,255,.18) 0 10px, transparent 11px),
+      radial-gradient(circle at 95% 55%, rgba(80,200,140,.15) 0 7px, transparent 8px),
+      radial-gradient(circle at 5% 75%, rgba(255,180,80,.15) 0 9px, transparent 10px),
+      linear-gradient(180deg,#f4f9f4 0%,#f3f2fb 100%);
+    min-height:100vh; padding:36px 16px 60px; color:#222;
+  }
+  .wrap { max-width:720px; margin:0 auto; }
+
+  /* ── header ── */
+  .badge {
+    display:block; width:fit-content; margin:0 auto 14px;
+    background:#111; color:#ffd54a; font-weight:800; font-size:12px;
+    letter-spacing:3px; padding:7px 22px; border-radius:999px;
+  }
+  h1 { text-align:center; font-size:34px; font-weight:900; letter-spacing:-1px; }
+  h1 .g1 { color:#03c75a; }
+  h1 .g2 { background:linear-gradient(90deg,#7c4dff,#b04dff); -webkit-background-clip:text; background-clip:text; color:transparent; }
+  .sub { text-align:center; color:#777; font-size:13px; margin-top:8px; }
+
+  .meta { display:flex; justify-content:center; gap:10px; margin:22px 0 6px; flex-wrap:wrap; }
+  .rate-box {
+    display:flex; align-items:stretch; border-radius:12px; overflow:hidden;
+    box-shadow:0 4px 14px rgba(0,0,0,.08); font-weight:800;
+  }
+  .rate-box .label { background:#03a05a; color:#fff; padding:12px 20px; font-size:15px; }
+  .rate-box .value { background:#fff; color:#111; padding:12px 26px; font-size:20px; display:flex; align-items:center; }
+  .update-chip {
+    display:flex; align-items:center; gap:6px; background:#fff; border-radius:12px;
+    padding:12px 18px; font-size:13px; color:#555; box-shadow:0 4px 14px rgba(0,0,0,.08);
+  }
+  .update-chip b { color:#111; }
+
+  .section-tag {
+    display:block; width:fit-content; margin:34px auto 16px; background:#111; color:#fff;
+    font-size:13px; font-weight:700; padding:7px 20px; border-radius:999px;
+  }
+
+  /* ── rewards ── */
+  .rewards { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; }
+  @media (max-width:700px){ .rewards { grid-template-columns:1fr; } }
+  .rw-card { border-radius:16px; padding:16px 12px 18px; color:#fff; box-shadow:0 6px 18px rgba(0,0,0,.10); }
+  .rw-card.green  { background:linear-gradient(160deg,#02b558,#019a6b); }
+  .rw-card.purple { background:linear-gradient(160deg,#7c4dff,#a24dff); }
+  .rw-card.blue   { background:linear-gradient(160deg,#2f6bff,#1e9bff); }
+  .rw-tag { font-size:10px; font-weight:800; letter-spacing:1.5px; background:rgba(0,0,0,.28); width:fit-content; padding:4px 10px; border-radius:999px; margin-bottom:10px; }
+  .rw-title { font-size:16px; font-weight:900; margin-bottom:2px; white-space:nowrap; }
+  .rw-desc { font-size:10.5px; opacity:.85; margin-bottom:12px; white-space:nowrap; }
+  .rw-row { display:flex; align-items:center; gap:10px; background:rgba(255,255,255,.14); border-radius:10px; padding:9px 12px; margin-top:6px; }
+  .rw-row .medal { font-size:20px; width:24px; text-align:center; flex-shrink:0; }
+  .rw-row .rk { font-size:12px; font-weight:700; opacity:.9; width:26px; white-space:nowrap; flex-shrink:0; }
+  .rw-row .info { display:flex; flex-direction:column; gap:2px; }
+  .rw-row .amt { font-weight:900; font-size:15px; white-space:nowrap; }
+  .rw-row .detail { font-size:10px; opacity:.85; line-height:1.5; white-space:nowrap; }
+  .conditions {
+    margin-top:12px; background:#fff; border-radius:14px; padding:14px 18px;
+    font-size:12px; color:#555; box-shadow:0 4px 14px rgba(0,0,0,.06); line-height:1.9;
+  }
+  .conditions b { color:#111; }
+  .conditions .must { color:#e0a400; font-weight:800; margin-right:6px; }
+
+  /* ── leagues ── */
+  .league { display:flex; border-radius:18px; overflow:hidden; margin-top:16px; box-shadow:0 6px 20px rgba(0,0,0,.10); background:#fff; }
+  .league .side {
+    width:96px; min-width:96px; display:flex; align-items:center; justify-content:center;
+    color:#fff; font-weight:900; font-size:16px; text-align:center; line-height:1.5; padding:10px 6px;
+  }
+  .league.green  .side { background:linear-gradient(180deg,#03c75a,#019a6b); }
+  .league.purple .side { background:linear-gradient(180deg,#8b5cf6,#a855f7); }
+  .league.blue   .side { background:linear-gradient(180deg,#2f6bff,#1e9bff); }
+  .league .body { flex:1; padding:16px 16px 14px; }
+
+  .rank-row { display:flex; align-items:center; gap:10px; padding:9px 4px; }
+  .rank-row + .rank-row { border-top:1px dashed #eee; }
+  .rank-row .medal { font-size:26px; width:34px; text-align:center; }
+  .rank-pill { font-size:12px; font-weight:800; color:#fff; border-radius:999px; padding:4px 12px; white-space:nowrap; }
+  .green  .rank-pill { background:#03b357; }
+  .purple .rank-pill { background:#8b5cf6; }
+  .blue   .rank-pill { background:#2f6bff; }
+  .rank-row .team { flex:1; text-align:center; font-weight:800; font-size:16px; }
+  .rank-row .val { font-size:12px; color:#999; white-space:nowrap; min-width:70px; text-align:right; }
+  .delta { font-size:11px; font-weight:800; margin-left:4px; }
+  .delta.up { color:#e5484d; } .delta.down { color:#3b82f6; } .delta.same { color:#bbb; }
+
+  .chase-title { text-align:center; font-size:12px; font-weight:800; color:#e0a400; margin:12px 0 8px; }
+  .chase { display:grid; grid-template-columns:1fr 1fr; gap:8px; }
+  .chase .c-box {
+    border:1.5px solid; border-radius:999px; padding:7px 10px; font-size:12px; font-weight:700;
+    display:flex; align-items:center; justify-content:center; gap:6px; background:#fff;
+  }
+  .green  .c-box { border-color:#03c75a; color:#111; }
+  .purple .c-box { border-color:#a855f7; color:#111; }
+  .blue   .c-box { border-color:#2f6bff; color:#111; }
+  .c-box .c-rk { color:#999; font-weight:800; }
+
+  /* ── admin ── */
+  .admin-bar { display:flex; justify-content:flex-end; gap:8px; margin-top:26px; }
+  .btn {
+    border:none; border-radius:10px; padding:10px 18px; font-size:13px; font-weight:700;
+    cursor:pointer; box-shadow:0 3px 10px rgba(0,0,0,.10);
+  }
+  .btn.edit { background:#111; color:#fff; }
+  .btn.save { background:#03c75a; color:#fff; display:none; }
+  .btn.cancel { background:#fff; color:#555; display:none; }
+  .btn.reset { background:#fff; color:#c33; }
+  #adminPanel { display:none; margin-top:14px; background:#fff; border-radius:16px; padding:18px; box-shadow:0 6px 20px rgba(0,0,0,.10); }
+  #adminPanel h3 { font-size:14px; margin:14px 0 8px; }
+  #adminPanel h3:first-child { margin-top:0; }
+  .in-row { display:flex; gap:8px; margin-bottom:6px; align-items:center; }
+  .in-row input { border:1px solid #ddd; border-radius:8px; padding:8px 10px; font-size:13px; }
+  .in-row input.t-name { flex:1; }
+  .in-row input.t-val { width:110px; text-align:right; }
+  .in-row .del { border:none; background:#fee; color:#c33; border-radius:8px; width:32px; height:32px; cursor:pointer; font-weight:800; }
+  .add-btn { border:1px dashed #bbb; background:#fafafa; color:#777; border-radius:8px; padding:7px 12px; font-size:12px; cursor:pointer; margin-top:2px; }
+  .top-inputs { display:flex; gap:10px; flex-wrap:wrap; margin-bottom:6px; }
+  .top-inputs label { font-size:12px; color:#777; display:flex; flex-direction:column; gap:4px; font-weight:700; }
+  .top-inputs input { border:1px solid #ddd; border-radius:8px; padding:8px 10px; font-size:13px; width:140px; }
+  .hint { font-size:11px; color:#aaa; margin-top:10px; line-height:1.7; }
+  footer { text-align:center; font-size:11px; color:#bbb; margin-top:40px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <span class="badge">🏆 JULY REVENUE BOOST 🏆</span>
+  <h1><span class="g1">네이버 7월 매출</span> <span class="g2">BOOST LEAGUE</span></h1>
+  <p class="sub">증액금액 · 증액률 · 광고주 수로 겨루는 7월 매출 BOOST 리그</p>
+
+  <div class="meta">
+    <div class="rate-box"><div class="label">PlayD 현재까지 달성율</div><div class="value" id="rateView">-</div></div>
+    <div class="update-chip">📅 업데이트&nbsp;<b id="dateView">-</b></div>
+    <div class="update-chip" id="srcChip" style="display:none"></div>
+  </div>
+
+  <!-- ═══════════ 리워드 안내 ═══════════ -->
+  <span class="section-tag">💰 리워드 안내</span>
+
+  <div class="rewards">
+    <div class="rw-card green">
+      <div class="rw-tag">AMOUNT LEAGUE</div>
+      <div class="rw-title">증액금액 MoM TOP 3</div>
+      <div class="rw-desc">전월 대비 매출 증액금액 기준</div>
+      <div class="rw-row"><span class="medal">🏆</span><span class="rk">1위</span><span class="info"><span class="amt">총 600만원</span><span class="detail">팀 경비 300만원<br>개인 현금 지급 300만원</span></span></div>
+      <div class="rw-row"><span class="medal">🥈</span><span class="rk">2위</span><span class="info"><span class="amt">총 400만원</span><span class="detail">팀 경비 200만원<br>개인 현금 지급 200만원</span></span></div>
+      <div class="rw-row"><span class="medal">🥉</span><span class="rk">3위</span><span class="info"><span class="amt">총 300만원</span><span class="detail">팀 경비 150만원<br>개인 현금 지급 150만원</span></span></div>
+    </div>
+    <div class="rw-card purple">
+      <div class="rw-tag">GROWTH RATE LEAGUE</div>
+      <div class="rw-title">증액률 MoM TOP 3</div>
+      <div class="rw-desc">전월 대비 매출 증액률 기준</div>
+      <div class="rw-row"><span class="medal">🏆</span><span class="rk">1위</span><span class="info"><span class="amt">총 300만원</span><span class="detail">팀 경비 150만원<br>개인 현금 지급 150만원</span></span></div>
+      <div class="rw-row"><span class="medal">🥈</span><span class="rk">2위</span><span class="info"><span class="amt">총 250만원</span><span class="detail">팀 경비 125만원<br>개인 현금 지급 125만원</span></span></div>
+      <div class="rw-row"><span class="medal">🥉</span><span class="rk">3위</span><span class="info"><span class="amt">총 200만원</span><span class="detail">팀 경비 100만원<br>개인 현금 지급 100만원</span></span></div>
+    </div>
+    <div class="rw-card blue">
+      <div class="rw-tag">CLIENT GROWTH LEAGUE</div>
+      <div class="rw-title">증액 광고주수 TOP 3</div>
+      <div class="rw-desc">+100만원 이상 증액 광고주 수 기준 (MoM)</div>
+      <div class="rw-row"><span class="medal">🏆</span><span class="rk">1위</span><span class="info"><span class="amt">총 200만원</span><span class="detail">팀 경비 100만원<br>개인 현금 지급 100만원</span></span></div>
+      <div class="rw-row"><span class="medal">🥈</span><span class="rk">2위</span><span class="info"><span class="amt">총 150만원</span><span class="detail">팀 경비 75만원<br>개인 현금 지급 75만원</span></span></div>
+      <div class="rw-row"><span class="medal">🥉</span><span class="rk">3위</span><span class="info"><span class="amt">총 100만원</span><span class="detail">팀 경비 50만원<br>개인 현금 지급 50만원</span></span></div>
+    </div>
+  </div>
+
+  <div class="conditions">
+    <span class="must">✳ 필수 조건</span>
+    <b>네이버SA</b> (파워링크+쇼핑검색광고) 기준 · 매체 프로모션 달성 시 리워드 지급 · <b>7월 이관 광고주 제외</b><br>
+    ※ 팀 경비 지급분은 팀별 상황에 맞게 자율적으로 분배해 주시면 됩니다. · 모든 수상 항목 중복 수상 가능
+  </div>
+
+  <!-- ═══════════ 순위 현황 ═══════════ -->
+  <span class="section-tag">🏆 부문별 순위 현황</span>
+  <div id="leagues"></div>
+
+  <!-- ═══════════ 관리 ═══════════ -->
+  <div class="admin-bar">
+    <button class="btn reset" id="btnReset">기본값 복원</button>
+    <button class="btn cancel" id="btnCancel">취소</button>
+    <button class="btn save" id="btnSave">💾 저장</button>
+    <button class="btn edit" id="btnEdit">✏️ 데이터 수정</button>
+  </div>
+  <div id="adminPanel"></div>
+
+  <footer>NAVER JULY REVENUE BOOST LEAGUE · PlayD</footer>
+</div>
+
+<script>
+/* ═══════════════════════════════════════════════════════
+   ▼ 일별 데이터 — 매일 이 부분만 수정하면 됩니다.
+   value 기준으로 자동 내림차순 정렬되어 순위가 매겨집니다.
+   prevRank: 전일 순위 (순위 변동 화살표 표시용, 없으면 null)
+═══════════════════════════════════════════════════════ */
+const DEFAULT_DATA = {
+  updateDate: "2026-07-13",
+  rate: 31,                     // PlayD 달성율 (%)
+  leagues: [
+    {
+      key: "amount", name: "증액금액<br>TOP 3", color: "green", unit: "만원",
+      teams: [
+        { name: "디지털마케팅1팀",   value: 0, prevRank: null },
+        { name: "플랫폼마케팅2팀",   value: 0, prevRank: null },
+        { name: "퍼포먼스마케팅1팀", value: 0, prevRank: null },
+        { name: "데이터마케팅1팀",   value: 0, prevRank: null },
+        { name: "디지털마케팅4팀",   value: 0, prevRank: null }
+      ]
+    },
+    {
+      key: "growth", name: "증액률<br>TOP 3", color: "purple", unit: "%",
+      teams: [
+        { name: "디지털마케팅5팀", value: 0, prevRank: null },
+        { name: "데이터마케팅2팀", value: 0, prevRank: null },
+        { name: "디지털마케팅6팀", value: 0, prevRank: null },
+        { name: "데이터마케팅5팀", value: 0, prevRank: null },
+        { name: "디지털마케팅3팀", value: 0, prevRank: null }
+      ]
+    },
+    {
+      key: "clients", name: "증액<br>광고주수<br>TOP 3", color: "blue", unit: "개",
+      teams: [
+        { name: "퍼포먼스마케팅4팀", value: 0, prevRank: null },
+        { name: "퍼포먼스마케팅2팀", value: 0, prevRank: null },
+        { name: "퍼포먼스마케팅3팀", value: 0, prevRank: null },
+        { name: "디지털마케팅4팀",   value: 0, prevRank: null },
+        { name: "데이터마케팅5팀",   value: 0, prevRank: null }
+      ]
+    }
+  ]
+};
+/* ═══════════════════════════════════════════════════════ */
+
+/* ═══════════════════════════════════════════════════════
+   ▼ 구글 시트 연동 설정
+   1) 구글 시트를 만들고 첫 행에 머리글: 부문 | 팀명 | 값 | 전일순위
+   2) 공유 → "링크가 있는 모든 사용자: 뷰어"로 설정
+   3) 아래 SHEET_URL에 시트 주소를 붙여넣기
+   비워두면("") 시트 없이 내장 데이터로 동작합니다.
+═══════════════════════════════════════════════════════ */
+const SHEET_URL  = "https://docs.google.com/spreadsheets/d/1i4-aH4mLN8ug_N5sipnokFDKpEWTr6rhM2NejnVdQTM/edit";
+const SHEET_NAME = "";        // 비워두면 첫 번째 탭을 읽음 (특정 탭만 읽으려면 탭 이름 입력)
+
+const LS_KEY = "boostLeague2607";
+const ADMIN_PW = "달성제발";
+
+/* ── 구글 시트 로드 (JSONP 방식: CORS 제한 없음, 로컬 파일에서도 동작) ── */
+function toNum(v) { return parseFloat(String(v).replace(/[^0-9.\-]/g, "")) || 0; }
+
+function fmtDateCell(cell) {
+  // 구글시트가 날짜 셀을 Date(y,m,d)로 주는 경우 처리
+  if (cell && typeof cell.v === "string" && cell.v.startsWith("Date(")) {
+    const p = cell.v.slice(5, -1).split(",").map(Number);
+    return p[0] + "-" + String(p[1] + 1).padStart(2, "0") + "-" + String(p[2]).padStart(2, "0");
+  }
+  return cell ? String(cell.f != null ? cell.f : (cell.v != null ? cell.v : "")).trim() : "";
+}
+
+function buildFromGviz(resp) {
+  if (!resp || resp.status === "error" || !resp.table) return null;
+  const d = JSON.parse(JSON.stringify(DEFAULT_DATA));
+  d.leagues.forEach(lg => lg.teams = []);
+  const findLeague = s => {
+    if (s.includes("금액")) return d.leagues[0];
+    if (s.includes("증액률") || s.includes("증액율")) return d.leagues[1];
+    if (s.includes("광고주")) return d.leagues[2];
+    return null;
+  };
+  // 머리글이 cols.label로 흡수되든 rows에 남아있든 모두 처리
+  const rows = resp.table.rows.map(r => (r.c || []).map(fmtDateCell));
+  rows.forEach(r => {
+    const sec = r[0] || "", name = r[1] || "", val = r[2] || "", prev = r[3] || "";
+    if (!sec || !name || sec === "부문") return;
+    if (sec.includes("설정")) {
+      if (name.includes("일자") || name.includes("날짜")) d.updateDate = val;
+      else if (name.includes("달성")) d.rate = toNum(val);
+      return;
+    }
+    const lg = findLeague(sec);
+    if (lg) lg.teams.push({ name, value: toNum(val), prevRank: prev ? parseInt(prev, 10) : null });
+  });
+  if (d.leagues.every(lg => lg.teams.length === 0)) return null;
+  return d;
+}
+
+function loadFromSheet() {
+  return new Promise((resolve, reject) => {
+    const m = SHEET_URL.match(/\/d\/([a-zA-Z0-9\-_]+)/);
+    if (!m) return resolve(null);
+    let settled = false;
+    window.google = window.google || {};
+    window.google.visualization = window.google.visualization || {};
+    window.google.visualization.Query = window.google.visualization.Query || {};
+    window.google.visualization.Query.setResponse = resp => {
+      settled = true;
+      resolve(buildFromGviz(resp));
+    };
+    const s = document.createElement("script");
+    s.src = "https://docs.google.com/spreadsheets/d/" + m[1] + "/gviz/tq?tqx=out:json" +
+      (SHEET_NAME ? "&sheet=" + encodeURIComponent(SHEET_NAME) : "") + "&_=" + Date.now();
+    s.onerror = () => { if (!settled) { settled = true; reject(new Error("script load error")); } };
+    document.head.appendChild(s);
+    setTimeout(() => { if (!settled) reject(new Error("timeout")); }, 8000);
+  });
+}
+
+function setSource(ok) {
+  const el = document.getElementById("srcChip");
+  el.style.display = "flex";
+  el.innerHTML = ok ? "🟢 구글시트 연동" : "⚠️ 시트 연결 실패 · 내장 데이터 표시";
+}
+
+function checkPw() {
+  const pw = prompt("🔒 수정 권한 비밀번호를 입력하세요");
+  if (pw === null) return false;
+  if (pw !== ADMIN_PW) { alert("비밀번호가 올바르지 않습니다."); return false; }
+  return true;
+}
+let data = loadData();
+
+function loadData() {
+  try {
+    const saved = localStorage.getItem(LS_KEY);
+    if (saved) return JSON.parse(saved);
+  } catch (e) {}
+  return JSON.parse(JSON.stringify(DEFAULT_DATA));
+}
+
+function sortedTeams(lg) {
+  // value가 모두 0이면 입력 순서 유지(초기 세팅용), 아니면 내림차순 정렬
+  const anyVal = lg.teams.some(t => t.value !== 0);
+  const arr = [...lg.teams];
+  if (anyVal) arr.sort((a, b) => b.value - a.value);
+  return arr;
+}
+
+function fmt(v, unit) {
+  if (v === 0) return "";
+  const n = Number(v).toLocaleString("ko-KR");
+  return n + unit;
+}
+
+function deltaHtml(rank, prevRank) {
+  if (prevRank == null) return "";
+  const d = prevRank - rank;
+  if (d > 0)  return `<span class="delta up">▲${d}</span>`;
+  if (d < 0)  return `<span class="delta down">▼${-d}</span>`;
+  return `<span class="delta same">-</span>`;
+}
+
+const MEDALS = ["🏆", "🥈", "🥉"];
+
+function render() {
+  document.getElementById("rateView").textContent = data.rate + " %";
+  document.getElementById("dateView").textContent = data.updateDate;
+
+  const box = document.getElementById("leagues");
+  box.innerHTML = data.leagues.map(lg => {
+    const ts = sortedTeams(lg);
+    const top3 = ts.slice(0, 3).map((t, i) => `
+      <div class="rank-row">
+        <span class="medal">${MEDALS[i]}</span>
+        <span class="rank-pill">${i + 1}위</span>
+        <span class="team">${t.name}${deltaHtml(i + 1, t.prevRank)}</span>
+        <span class="val">${fmt(t.value, lg.unit)}</span>
+      </div>`).join("");
+    const chase = ts.slice(3, 5).map((t, i) => `
+      <div class="c-box"><span class="c-rk">${i + 4}위</span> ${t.name}${deltaHtml(i + 4, t.prevRank)}
+        <span style="color:#999;font-size:11px">${fmt(t.value, lg.unit)}</span></div>`).join("");
+    return `
+      <div class="league ${lg.color}">
+        <div class="side">${lg.name}</div>
+        <div class="body">
+          ${top3}
+          ${chase ? `<div class="chase-title">⚡ 지금부터가 진짜 승부! TOP 3 추격권</div><div class="chase">${chase}</div>` : ""}
+        </div>
+      </div>`;
+  }).join("");
+}
+
+/* ── 관리자 편집 ── */
+const panel = document.getElementById("adminPanel");
+const btnEdit = document.getElementById("btnEdit"),
+      btnSave = document.getElementById("btnSave"),
+      btnCancel = document.getElementById("btnCancel"),
+      btnReset = document.getElementById("btnReset");
+let draft = null;
+
+function openAdmin() {
+  draft = JSON.parse(JSON.stringify(data));
+  panel.style.display = "block";
+  btnSave.style.display = btnCancel.style.display = "inline-block";
+  btnEdit.style.display = "none";
+  renderAdmin();
+}
+function closeAdmin() {
+  panel.style.display = "none";
+  btnSave.style.display = btnCancel.style.display = "none";
+  btnEdit.style.display = "inline-block";
+  draft = null;
+}
+
+function renderAdmin() {
+  panel.innerHTML = `
+    <div class="top-inputs">
+      <label>업데이트 일자 <input type="date" id="inDate" value="${draft.updateDate}"></label>
+      <label>PlayD 달성율 (%) <input type="number" id="inRate" value="${draft.rate}"></label>
+    </div>
+    ${draft.leagues.map((lg, li) => `
+      <h3>${lg.name.replace(/<br>/g, " ")} <span style="color:#aaa;font-weight:400">(단위: ${lg.unit})</span></h3>
+      ${lg.teams.map((t, ti) => `
+        <div class="in-row">
+          <input class="t-name" data-l="${li}" data-t="${ti}" data-f="name" value="${t.name}">
+          <input class="t-val" type="number" step="any" data-l="${li}" data-t="${ti}" data-f="value" value="${t.value}" placeholder="${lg.unit}">
+          <button class="del" data-l="${li}" data-t="${ti}">×</button>
+        </div>`).join("")}
+      <button class="add-btn" data-l="${li}">+ 팀 추가</button>
+    `).join("")}
+    <p class="hint">
+      · 숫자(매출/증액률/광고주수)를 입력하면 저장 시 자동으로 내림차순 정렬되어 순위가 갱신됩니다.<br>
+      · 저장 시 현재 순위가 '전일 순위'로 기록되어 다음 업데이트부터 ▲▼ 변동이 표시됩니다.<br>
+      · 데이터는 이 브라우저에 저장됩니다. '기본값 복원'을 누르면 파일에 내장된 초기 데이터로 돌아갑니다.
+    </p>`;
+
+  panel.querySelectorAll("input[data-f]").forEach(inp => {
+    inp.addEventListener("input", e => {
+      const { l, t, f } = e.target.dataset;
+      draft.leagues[l].teams[t][f] = f === "value" ? Number(e.target.value || 0) : e.target.value;
+    });
+  });
+  panel.querySelectorAll(".del").forEach(b => {
+    b.addEventListener("click", e => {
+      const { l, t } = e.target.dataset;
+      draft.leagues[l].teams.splice(t, 1);
+      renderAdmin();
+    });
+  });
+  panel.querySelectorAll(".add-btn").forEach(b => {
+    b.addEventListener("click", e => {
+      draft.leagues[e.target.dataset.l].teams.push({ name: "새 팀", value: 0, prevRank: null });
+      renderAdmin();
+    });
+  });
+  panel.querySelector("#inDate").addEventListener("input", e => draft.updateDate = e.target.value);
+  panel.querySelector("#inRate").addEventListener("input", e => draft.rate = Number(e.target.value || 0));
+}
+
+btnEdit.addEventListener("click", () => { if (checkPw()) openAdmin(); });
+btnCancel.addEventListener("click", closeAdmin);
+btnSave.addEventListener("click", () => {
+  // 저장 직전: 저장 전 데이터의 순위를 prevRank로 기록
+  data.leagues.forEach((oldLg, li) => {
+    const oldSorted = sortedTeams(oldLg);
+    const newLg = draft.leagues[li];
+    if (!newLg) return;
+    newLg.teams.forEach(t => {
+      const idx = oldSorted.findIndex(o => o.name === t.name);
+      t.prevRank = idx >= 0 && oldSorted.some(o => o.value !== 0) ? idx + 1 : null;
+    
+    });
+  });
+  data = draft;
+  try { localStorage.setItem(LS_KEY, JSON.stringify(data)); } catch (e) {}
+  closeAdmin();
+  render();
+});
+btnReset.addEventListener("click", () => {
+  if (!checkPw()) return;
+  if (!confirm("파일에 내장된 기본 데이터로 되돌릴까요? 브라우저에 저장된 수정 내용이 삭제됩니다.")) return;
+  try { localStorage.removeItem(LS_KEY); } catch (e) {}
+  data = JSON.parse(JSON.stringify(DEFAULT_DATA));
+  closeAdmin();
+  render();
+});
+
+/* ── 초기 로드: 시트 연동 시 시트 데이터 우선 ── */
+(async () => {
+  render();
+  if (!SHEET_URL) return;
+  try {
+    const d = await loadFromSheet();
+    if (d) { data = d; setSource(true); render(); }
+    else setSource(false);
+  } catch (e) { setSource(false); }
+})();
+</script>
+</body>
+</html>
